@@ -168,7 +168,7 @@ def Q_1(cursor, conn, execution_time):
     #==========================================================================
     # Enter QUERY within the quotes:
 
-    query = """SELECT player_id, AVG(xg_score) AS average_xg_score
+    query = """SELECT player_name, AVG(xg_score) AS average_xg_score
                 FROM public.shots 
                 INNER JOIN public.players 
                 ON public.shots.initiating_player = public.players.player_id
@@ -179,7 +179,7 @@ def Q_1(cursor, conn, execution_time):
                 INNER JOIN public.competitions
                 ON (public.matches.competition_id, public.matches.season_id) = (public.competitions.competition_id, public.competitions.season_id)
                 WHERE (competition_name = 'La Liga' AND season_name = '2020/2021')
-                GROUP BY player_id
+                GROUP BY player_name
                 ORDER BY average_xg_score DESC
             """
 
@@ -200,7 +200,7 @@ def Q_2(cursor, conn, execution_time):
     #==========================================================================    
     # Enter QUERY within the quotes:
 
-    query = """SELECT player_name, COUNT(player_id) as num_shots
+    query = """SELECT player_name, COUNT(shots.event_id) as num_shots
                 FROM public.shots 
                 INNER JOIN public.players 
                 ON public.shots.initiating_player = public.players.player_id
@@ -288,7 +288,7 @@ def Q_5(cursor, conn, execution_time):
     #==========================================================================    
     # Enter QUERY within the quotes:
     
-    query = """SELECT  player_name, COUNT(passes.event_id) AS num_received
+    query = """SSELECT  player_name, COUNT(passes.event_id) AS num_received
                 FROM public.passes
                 INNER JOIN public.events
                     ON public.passes.event_id = public.events.event_id
@@ -296,7 +296,7 @@ def Q_5(cursor, conn, execution_time):
                     ON public.events.match_id = public.matches.match_id
                 INNER JOIN public.players
                     ON public.passes.receiving_player = public.players.player_id
-                WHERE (competition_id = 2 AND season_id = 44)
+                WHERE (competition_id = 2)
                 GROUP BY player_name
                 ORDER BY num_received DESC
                 """
@@ -325,7 +325,7 @@ def Q_6(cursor, conn, execution_time):
                     ON public.events.match_id = public.matches.match_id
                 INNER JOIN public.teams
                     ON public.events.event_team_id = public.teams.team_id
-                WHERE (competition_id = 2 AND season_id = 44)
+                WHERE (competition_id = 2)
                 GROUP BY team_name
                 ORDER BY num_shots DESC
                 """
