@@ -250,12 +250,15 @@ with open(os.path.join("dataset","matches.json"), "r", encoding="utf8") as jsonF
     with open(os.path.join("dataset","referees.json"), "w") as jsonFile:
         json.dump(allReferees, jsonFile, indent=4)
 
-#delete the manager ids in matches
+#delete the referee ids in matches
 with open(os.path.join("dataset","matches.json"), "r", encoding="utf8") as jsonFile:
     data = json.load(jsonFile)
     for match in data:
         if "referee" in match.keys():
+            match["referee_id"] = match["referee"]["id"]
             del match["referee"]
+        else:
+            match["referee_id"] = None
     with open(os.path.join("dataset","matches.json"), "w") as jsonFile:
         json.dump(data, jsonFile, indent=4)
 
