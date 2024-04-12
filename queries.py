@@ -346,7 +346,7 @@ def Q_7(cursor, conn, execution_time):
     #==========================================================================    
     # Enter QUERY within the quotes:
     
-    query = """ SELECT player_name, COUNT(passes.event_id) AS num_through_balls
+    query = """SELECT player_name, COUNT(passes.event_id) AS num_through_balls
                 FROM public.passes
                 INNER JOIN public.events
                     ON passes.event_id = events.event_id
